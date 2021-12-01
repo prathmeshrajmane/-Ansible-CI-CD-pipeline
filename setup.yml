@@ -1,0 +1,27 @@
+- name: website lunch using docker container
+  hosts: all
+  gather_facts: yes
+  tasks:
+   - name: Start service docker, if not started
+     service:
+           name: docker
+           state: started
+   - name: pull an image
+     docker_image:
+           name: "httpd"
+           source: pull
+   - name: Copy Content
+     copy:
+          src: /root/webserver/
+          dest: /root/webserver/
+     ignore_errors: yes
+
+   - name: Container present
+     docker_container:
+           name: web-server
+           state: started
+           image: "httpd"
+           ports:
+              - "60:80"
+           volumes:
+              - /root/webserver/:/usr/local/apache2/htdocs/
