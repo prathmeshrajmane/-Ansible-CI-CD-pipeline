@@ -3,7 +3,7 @@ Pipeline{
 	 stages{
 		stage("Fetching the git repository")
 		  {
-		   git 'https://github.com/prathmeshrajmane/-Ansible-CI-CD-pipeline.git/'
+ 	           checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubcred', url: 'https://github.com/prathmeshrajmane/-Ansible-CI-CD-pipeline.git']]])
 		  }
 	        }
 	  	stage("Execute Ansible playbook")
