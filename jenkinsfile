@@ -1,0 +1,14 @@
+Pipeline{
+         agent any
+	 stages{
+		stage("Fetching the git repository")
+		  {
+		   git 'https://github.com/prathmeshrajmane/-Ansible-CI-CD-pipeline.git/'
+		  }
+	        }
+	  	stage("Execute Ansible playbook")
+		 {
+		   sh 'ansible-playbook setup.yml
+		 }
+	}
+		 
