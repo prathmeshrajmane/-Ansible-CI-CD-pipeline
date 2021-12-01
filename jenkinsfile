@@ -1,14 +1,23 @@
-Pipeline{
-         agent any
-	 stages{
-		stage("Fetching the git repository")
-		  {
- 	           checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubcred', url: 'https://github.com/prathmeshrajmane/-Ansible-CI-CD-pipeline.git']]])
-		  }
-	        }
-	  	stage("Execute Ansible playbook")
-		 {
-		   sh 'ansible-playbook setup.yml
-		 }
-	}
-		 
+peline{
+	agent any
+	stages{
+		stage('SCM Checkout') {
+			steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/prathmeshrajmane/-Ansible-CI-CD-pipeline.git']]])                 }
+			}
+                stage("Execute Ansible playbook")
+                 {
+                     steps{
+                         
+                   sh 'ansible-playbook setup.yml'
+                     
+                     }
+                 }
+                 stage("Testing")
+                 {
+                     steps{
+                    sh 'sh ip.sh'
+                     }
+                 }
+        }
+}
